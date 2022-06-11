@@ -36,7 +36,7 @@ resource "google_compute_instance_template" "gcpteam-template" {
   name                    = var.instance_template_name
   machine_type            = var.machine_type
   can_ip_forward          = false
-  metadata_startup_script = file("startup.sh")
+#   metadata_startup_script = file("startup.sh")
   metadata = {
     ssh-keys = "centos7:${file("~/.ssh/id_rsa.pub")}"
   }
