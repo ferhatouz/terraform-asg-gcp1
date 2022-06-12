@@ -65,3 +65,7 @@ resource "google_compute_firewall" "allow-http" {
 
   source_tags = ["web"]
 }
+
+output "LoadIP"{
+  value = google_compute_global_forwarding_rule.default.ip_address
+}
