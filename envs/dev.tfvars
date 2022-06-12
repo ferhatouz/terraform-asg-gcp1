@@ -1,6 +1,6 @@
 vpc_name                    = "VPC"
 region                      = "us-central1"
-zone                        = "us-central-c"
+zone                        = "us-central1-c"
 instance_name               = "gcpteam-instance"
 machine_type                = "n1-standard-1"
 image                       = "centos-cloud/centos-7"
