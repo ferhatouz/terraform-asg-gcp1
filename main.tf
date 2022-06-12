@@ -50,18 +50,13 @@ resource "google_compute_instance_template" "gcpteam-template" {
   }
 }
 
-resource "google_compute_firewall" "allow_http" {
-  name    = var.firewall_name
+# Allow http
+resource "google_compute_firewall" "allow-http" {
+  name    = "allow-http"
   network = google_compute_network.vpc_network.self_link
-
-  allow {
-    protocol = "icmp"
-  }
-
   allow {
     protocol = "tcp"
-    ports    = ["80", "22"]
+    ports    = ["80"]
   }
-
-  source_ranges = ["0.0.0.0/0"]
+  target_tags = ["http"] 
 }
