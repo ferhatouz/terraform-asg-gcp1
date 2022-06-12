@@ -19,22 +19,6 @@ resource "google_compute_url_map" "default" {
   name            = "l7-xlb-url-map"
   default_service = google_compute_backend_service.default.self_link
 }
-
-# backend service with custom request and response headers
-resource "google_compute_backend_service" "default" {
-  name                    = "backend-service"
-  port_name               = "http"
-  protocol                = "HTTP"
-  load_balancing_scheme   = "EXTERNAL"
-  health_checks           = google_compute_health_check.healthcheck.self_link
-
-  backend {
-    group                 = google_compute_instance_group_manager.gmanager.instance_group
-    balancing_mode        = "RATE"
-    max_rate_per_instance = 100
-  }
-}
-
 resource "google_compute_health_check" "healthcheck" {
   name               = "healthcheck"
   timeout_sec        = 1
@@ -43,4 +27,20 @@ resource "google_compute_health_check" "healthcheck" {
     port = 80
   }
 }
+
+
+# backend service with custom request and response headers
+resource "google_compute_backend_service" "default" {
+  name                    = "backend-service"
+  port_name               = "http"
+  protocol                = "HTTP"
+  load_balancing_scheme   = "EXTERNAL"
+  health_checks           = [google_compute_health_check.healthcheck.self_link]
+
+  backend {
+    group                 = google_compute_instance_group_manager.gmanager.instance_group
+    balancing_mode        = "RATE"
+    max_rate_per_instance = 100
+  }
 }
+
